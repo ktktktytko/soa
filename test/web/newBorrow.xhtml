@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<h:head>
+    <title>New Borrow</title>
+</h:head>
+<h:body>
+
+    <h:form id="newLoan">
+        <h:panelGrid columns="1">
+            <p>Title
+                <h:selectOneMenu id="finalBase" value="#{LibManager.title}" >
+                    <f:selectItems value="#{LibManager.getAllBooksAvailable()}" var="b"
+                                   itemLabel="#{b.title_book}" itemValue="#{b.title_book}" />
+                </h:selectOneMenu>
+            </p>
+
+            <p>Reader
+                <h:selectOneMenu id="finalUser" value="#{readerer}">
+                    <f:selectItems value="#{LibManager.getAllUsers()}" var="b"
+                                   itemLabel="#{b.surname_reader}" itemValue="#{b.id_reader}" />
+                </h:selectOneMenu>
+            </p>
+            Start Date:  <h:inputText id="startDate" value="#{LibManager.startDate}"/>
+            End Date:  <h:inputText id="endDate" value="#{LibManager.endDate}"/>
+
+            <h:commandButton value="Save" action="#{LibManager.addBorrow()}"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>

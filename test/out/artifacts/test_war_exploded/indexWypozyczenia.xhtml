@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://primefaces.org/ui">
+<h:head>
+    <title>
+        List of Books
+    </title>
+</h:head>
+<h:body>
+    <div style="float:left;">
+    Books:
+    <h:form id="bookList">
+        <p:dataTable id="bookListTable" value="#{LibManager.getAllBooks()}" var="b">
+
+            <p:column headerText="ID">
+                <h:outputText value="#{b.id_book}"/>
+            </p:column>
+            <p:column filterBy="#{b.id_author.name_author}">
+                <f:facet name="header">Author</f:facet>
+                <h:outputText value="#{b.id_author.name_author } "/>
+            </p:column>
+            <p:column filterBy="#{b.title_book}">
+                <f:facet name="header">Title</f:facet>
+                <h:outputText value="#{b.title_book}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton action="#{LibManager.deleteBook(b.id_book)}" value="Delete"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton action="#{LibManager.editBookDetailsById(b.id_book)}" value="Update">
+                    <f:param name="selectedBookId" value="#{b.id_book}"/>
+                </h:commandButton>
+            </p:column>
+        </p:dataTable>
+        <h:commandButton action="newBook.xhtml?faces-redirect=true" value="Add New Book"
+                         styleClass="btn btn-success btnSpace"/>
+    </h:form>
+
+    </div>
+    <div style="float:left;">
+    Borrows:
+    <h:form id="borrows">
+        <p:dataTable id="borrowTable" value="#{LibManager.getAllBorrows()}" var="l">
+
+            <p:column filterBy="#{l.id_borrow}">
+                <f:facet name="header">ID</f:facet>
+                <h:outputText value="#{l.id_borrow}"/>
+            </p:column>
+            <p:column filterBy="#{l.id_book.id_author.name_author}">
+                <f:facet name="header">Author</f:facet>
+                <h:outputText value="#{l.id_book.id_author.name_author} "/>
+            </p:column>
+            <p:column filterBy="#{l.id_book.title_book}">
+                <f:facet name="header">Title</f:facet>
+                <h:outputText value="#{l.id_book.title_book}"/>
+            </p:column>
+            <p:column filterBy="#{l.id_reader.name_reader}">
+                <f:facet name="header">Reader Name</f:facet>
+                <h:outputText value="#{l.id_reader.name_reader }"/>
+            </p:column>
+            <p:column filterBy="#{l.id_reader.surname_reader}">
+                <f:facet name="header">Reader Surname</f:facet>
+                <h:outputText value="#{l.id_reader.surname_reader }"/>
+            </p:column>
+            <p:column filterBy="#{l.start_borrow}">
+                <f:facet name="header">Start</f:facet>
+                <h:outputText value="#{l.start_borrow }"/>
+            </p:column>
+            <p:column filterBy="#{l.end_borrow}">
+                <f:facet name="header">End</f:facet>
+                <h:outputText value="#{l.end_borrow }"/>
+            </p:column>
+            <p:column >
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton action="#{LibManager.deleteBorrow(l.id_borrow)}" value="Delete"/>
+            </p:column>
+        </p:dataTable>
+        <h:commandButton action="newBorrow.xhtml?faces-redirect=true" value="Add New Borrow"
+                         styleClass="btn btn-success btnSpace"/>
+
+    </h:form>
+    </div>
+    <div style="clear:left;"></div>
+</h:body>
+
+</html>
